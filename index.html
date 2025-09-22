@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Aqui – Open Air Quality Sensor</title>
+	<meta name="description" content="Aqui is an ultra-frugal, open-source DIY air quality sensor that pairs with your phone to show real‑time PM2.5 and PM10." />
+	<style>
+		:root {
+			--bg: #0f1115;
+			--bg-accent: #161a21;
+			--text: #e6e8ea;
+			--text-soft: #b2b8bf;
+			--accent: #ff8c32;
+			--max-width: 1180px;
+			--radius: 14px;
+			--font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+		}
+		* { box-sizing: border-box; }
+		html, body { padding:0; margin:0; }
+		body {
+			font-family: var(--font-stack);
+			background: radial-gradient(circle at 20% 20%, #1d242d, #0f1115 55%);
+			color: var(--text);
+			-webkit-font-smoothing: antialiased;
+			line-height: 1.5;
+		}
+		a { color: var(--accent); text-decoration: none; }
+		a:hover { text-decoration: underline; }
+		.wrap { max-width: var(--max-width); margin: 0 auto; padding: clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2.2vw, 2.25rem); }
+		header { padding-top: .5rem; }
+		.brand { font-weight:600; letter-spacing:.5px; font-size:1rem; text-transform:uppercase; color:var(--text-soft); }
+		.hero { display: grid; gap: clamp(2rem, 4vw, 4rem); align-items: center; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); margin-top: clamp(1rem, 3vh, 3rem); }
+		.hero-media { position:relative; }
+		.hero-media figure { margin:0; background: var(--bg-accent); padding: .75rem; border-radius: var(--radius); box-shadow: 0 4px 16px -4px rgba(0,0,0,.55), 0 2px 4px -1px rgba(0,0,0,.4); }
+		.hero-media img { width:100%; height:auto; display:block; border-radius: 10px; }
+		.hero-copy h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); line-height:1.08; margin:0 0 1rem; font-weight:650; letter-spacing:-.5px; }
+		.hero-copy p { font-size: clamp(1rem, 1.25vw, 1.15rem); max-width: 62ch; margin:0 0 1.1rem; color: var(--text-soft); }
+		.tag { display:inline-block; background: linear-gradient(135deg,var(--accent), #ffb347); color:#1a1209; font-weight:600; padding:.4rem .8rem; font-size:.75rem; letter-spacing:.5px; text-transform:uppercase; border-radius: 999px; box-shadow:0 2px 6px -1px rgba(0,0,0,.4); }
+		.stack { display:flex; flex-wrap:wrap; gap:.75rem; margin:1.25rem 0 0; }
+		.stack a { font-size:.8rem; background:var(--bg-accent); color:var(--text-soft); padding:.55rem .85rem; border-radius: 999px; border:1px solid #262d37; transition:.25s background, .25s color, .25s border-color; }
+		.stack a:hover { background:#222a34; color:var(--text); border-color:#333d49; }
+		footer { margin-top: 6rem; padding: 3rem 0 4rem; font-size:.75rem; color: var(--text-soft); text-align:center; }
+		footer a { color: var(--text-soft); }
+		footer a:hover { color: var(--accent); }
+		/* App section */
+		.app { margin-top: clamp(3.5rem, 8vh, 6rem); }
+		.app-inner { background: var(--bg-accent); padding: clamp(1.75rem, 3vw, 3rem) clamp(1.5rem, 3vw, 3rem); border-radius: var(--radius); box-shadow: 0 4px 20px -5px rgba(0,0,0,.55), 0 2px 8px -3px rgba(0,0,0,.35); }
+		.app h2 { margin:0 0 1rem; font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing:-.5px; }
+		.app .lead { font-size: clamp(1rem, 1.15vw, 1.1rem); color: var(--text-soft); max-width: 70ch; margin:0 0 1.5rem; }
+		.app-actions { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; }
+		.btn { --btn-bg: var(--accent); --btn-text:#1a1209; position:relative; display:inline-flex; align-items:center; gap:.5rem; font-weight:600; padding:.85rem 1.25rem; font-size:.9rem; letter-spacing:.4px; border-radius: 10px; border:none; cursor:pointer; background: linear-gradient(135deg,var(--btn-bg), #ffb347); color:var(--btn-text); box-shadow: 0 2px 6px -2px rgba(0,0,0,.4), 0 4px 16px -6px rgba(0,0,0,.55); transition:.25s transform, .25s box-shadow; }
+		.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px -6px rgba(0,0,0,.6), 0 3px 10px -4px rgba(0,0,0,.5); text-decoration:none; }
+		.btn:active { transform: translateY(0); box-shadow: 0 2px 8px -4px rgba(0,0,0,.55); }
+		.note { font-size:.8rem; color: var(--text-soft); }
+		@media (prefers-color-scheme: light) { .app-inner { box-shadow: 0 6px 24px -8px rgba(0,0,0,.12), 0 3px 12px -5px rgba(0,0,0,.08); } }
+		/* Models section */
+		.models { margin-top: clamp(4rem, 10vh, 7rem); }
+		.models h2 { margin:0 0 1rem; font-size: clamp(1.6rem, 3.2vw, 2.2rem); letter-spacing:-.4px; }
+		.models .lead { font-size: clamp(1rem, 1.05vw, 1.05rem); color: var(--text-soft); max-width: 72ch; margin:0 0 2rem; }
+		.model-grid { display: grid; gap: clamp(1.25rem, 2vw, 2rem); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+		.model-card { display:flex; flex-direction:column; background: var(--bg-accent); border-radius: var(--radius); padding: 1rem 1rem 1.1rem; box-shadow: 0 3px 14px -4px rgba(0,0,0,.55), 0 2px 6px -3px rgba(0,0,0,.4); position:relative; }
+		.model-card.optional:before { content:"Optional"; position:absolute; top:.65rem; right:.7rem; font-size:.55rem; letter-spacing:.8px; font-weight:600; background:#26303b; color:var(--text-soft); padding:.25rem .45rem; border-radius:6px; text-transform:uppercase; }
+		.model-title { margin:.2rem 0 .75rem; font-size:1rem; letter-spacing:.25px; font-weight:600; }
+		.viewer-frame { aspect-ratio: 1 / 0.85; background: linear-gradient(145deg,#1a222b,#0e1013); border:1px solid #262d37; border-radius: 10px; position:relative; overflow:hidden; }
+		.viewer-frame.placeholder { display:flex; align-items:center; justify-content:center; font-size:.75rem; color:var(--text-soft); background: repeating-linear-gradient(45deg,#1a222b 0 10px,#131a21 10px 20px); }
+		.step-note { opacity:.75; }
+		.stl-view { width:100%; height:100%; display:block; }
+		.model-actions { margin-top:.85rem; display:flex; flex-wrap:wrap; gap:.6rem; }
+		.btn.ghost { background: #1d2430; color: var(--text-soft); box-shadow:none; border:1px solid #2b3643; background-image:none; }
+		.btn.ghost:hover { background:#242e3a; color: var(--text); border-color:#35424f; transform:none; box-shadow: 0 2px 8px -4px rgba(0,0,0,.6); }
+		@media (prefers-color-scheme: light) { .model-card { box-shadow: 0 4px 16px -6px rgba(0,0,0,.15), 0 2px 8px -4px rgba(0,0,0,.08); } .viewer-frame { background: linear-gradient(145deg,#f3f6f9,#dfe4ea); border-color:#d9e0e6; } .btn.ghost { background:#f5f7f9; border-color:#d9e0e6; } .btn.ghost:hover { background:#eef2f5; border-color:#cfd7de; } }
+		@media (prefers-color-scheme: light) {
+			:root { --bg:#f5f7fa; --bg-accent:#ffffff; --text:#1b232c; --text-soft:#5a646f; }
+			body { background: radial-gradient(circle at 20% 20%, #ffffff, #f1f4f7 70%); }
+			.hero-media figure { box-shadow: 0 4px 18px -3px rgba(0,0,0,.18), 0 3px 8px -2px rgba(0,0,0,.12); }
+			.stack a { border-color:#e2e6ea; }
+			.stack a:hover { background:#eef2f5; }
+		}
+		@media (max-width: 680px) {
+			.hero { margin-top: 1.25rem; }
+			.hero-copy h1 { font-size: clamp(2rem, 10vw, 2.7rem); }
+		}
+		/* Reduced motion */
+		@media (prefers-reduced-motion: reduce) { * { animation:none!important; transition:none!important; } }
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<header>
+			<div class="brand">Aqui</div>
+		</header>
+		<section class="hero" aria-label="Aqui air quality sensor overview">
+			<div class="hero-media">
+				<figure>
+					<img src="product.gif" alt="Aqui air quality sensor animated view" loading="lazy" />
+				</figure>
+			</div>
+			<div class="hero-copy">
+				<h1>Ultra‑frugal open air quality sensor</h1>
+				<p>Aqui is an air quality sensor that connects to a phone and shows the real-time PM2.5 and PM10 particulate readings. By leaning on your phone’s processor, battery, and connectivity, Aqui itself stays radically minimal, efficient, and frugal.</p>
+				<p>Aqui is an open-source DIY electronics project, released under the Creative Commons CC0 dedication. The parts can be ordered from AliExpress or other electronics suppliers, and the enclosure can be 3D printed.</p>
+				<div class="stack" aria-label="Project resources">
+					<a href="#" aria-label="View build guide (coming soon)">Build Guide</a>
+					<a href="#" aria-label="View parts list (coming soon)">Parts List</a>
+					<a href="#" aria-label="Download 3D case files" download>3D Files</a>
+					<a href="assets/app-release.apk" aria-label="Download Android companion app">Android App</a>
+					<a href="LICENSE" aria-label="View license details">License (CC0)</a>
+				</div>
+			</div>
+		</section>
+		<section class="app" id="app" aria-labelledby="app-heading">
+			<div class="app-inner">
+				<h2 id="app-heading">Companion App</h2>
+				<p class="lead">The Aqui Android companion app is <a href="https://github.com/ayushpatnaikgit/aqui" target="_blank" rel="noopener">open‑source on GitHub</a>. It connects to the sensor over USB serial (or future BLE) and streams the live particulate data (PM2.5 / PM10) to your phone.</p>
+				<div class="app-actions">
+					<a class="btn primary" href="assets/app-release.apk" download aria-label="Download the Aqui Android APK">Download APK</a>
+					<span class="note">Play Store listing coming soon.</span>
+				</div>
+			</div>
+		</section>
+		<section class="models" id="models" aria-labelledby="models-heading">
+			<div class="models-inner">
+				<h2 id="models-heading">3D Models</h2>
+				<p class="lead">Preview the printable enclosure parts directly in your browser. Download the STL files for the top and base. A STEP file is provided if you want to remix or adapt the design (optional).</p>
+				<div class="model-grid" role="list">
+					<article class="model-card" role="listitem">
+						<header><h3 class="model-title">Top Shell</h3></header>
+						<div class="viewer-frame">
+							<canvas class="stl-view" data-stl="assets/orange top.stl" aria-label="3D preview of top shell"></canvas>
+						</div>
+						<div class="model-actions">
+							<a class="btn ghost" href="assets/orange top.stl" download>Download STL</a>
+						</div>
+					</article>
+					<article class="model-card" role="listitem">
+						<header><h3 class="model-title">Base</h3></header>
+						<div class="viewer-frame">
+							<canvas class="stl-view" data-stl="assets/black base.stl" aria-label="3D preview of base shell"></canvas>
+						</div>
+						<div class="model-actions">
+							<a class="btn ghost" href="assets/black base.stl" download>Download STL</a>
+						</div>
+					</article>
+					<article class="model-card optional" role="listitem">
+						<header><h3 class="model-title">Full Assembly (STEP)</h3></header>
+						<div class="viewer-frame placeholder">
+							<div class="step-note">STEP file (no live preview)</div>
+						</div>
+						<div class="model-actions">
+							<a class="btn ghost" href="assets/casing v9.step" download>Download STEP (Optional)</a>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+		<footer>
+			<div>Made with care • Open hardware • CC0 1.0 Universal</div>
+		</footer>
+	</div>
+	<script src="https://unpkg.com/three@0.158.0/build/three.min.js" integrity="sha384-7b8rKqAjY5nOCmJwff6QF7tlrsBx2GyYBaiJDRHb4RQRR8E0BsKA+6MCVomPwYkE" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/three@0.158.0/examples/js/controls/OrbitControls.js" integrity="sha384-8zI0EHyCyMx5JpuLJXqpTJj5VqXH5WSRyHE/MmeG9iVo9XMD3pY8OF3Vkf0mPrGS" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/three@0.158.0/examples/js/loaders/STLLoader.js" integrity="sha384-bOQao1SCjymbhejCDBmStPNMyl4hXJq8FAh1CyvVS7+jiB2YNgfBydcSNMGGHhjn" crossorigin="anonymous"></script>
+	<script>
+	(function(){
+	  const canvases = document.querySelectorAll('.stl-view');
+	  if(!canvases.length || !window.THREE) return;
+	  function initViewer(canvas){
+	    const file = canvas.dataset.stl;
+	    const scene = new THREE.Scene();
+	    scene.background = new THREE.Color(0x0f1115);
+	    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
+	    camera.position.set(0, 40, 90);
+	    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+	    renderer.setPixelRatio(window.devicePixelRatio||1);
+	    const controls = new THREE.OrbitControls(camera, canvas);
+	    controls.enablePan = false;
+	    controls.target.set(0,0,0);
+	    controls.update();
+	    // Lights
+	    const hemi = new THREE.HemisphereLight(0xffffff, 0x202028, 1.1);
+	    scene.add(hemi);
+	    const dir = new THREE.DirectionalLight(0xffffff, 0.65);
+	    dir.position.set(40,60,25);
+	    scene.add(dir);
+	    const back = new THREE.DirectionalLight(0xffffff, 0.25);
+	    back.position.set(-40,-30,-50);
+	    scene.add(back);
+	    // Ground-ish subtle gradient plane (optional comment out if unwanted)
+	    const loader = new THREE.STLLoader();
+	    loader.load(file, geometry => {
+	      geometry.computeVertexNormals();
+	      const material = new THREE.MeshStandardMaterial({ color: 0xff8c32, metalness:0.1, roughness:0.55 });
+	      const mesh = new THREE.Mesh(geometry, material);
+	      geometry.center();
+	      // Auto scale to fit
+	      geometry.computeBoundingSphere();
+	      const bs = geometry.boundingSphere;
+	      const desired = 40; // target radius
+	      const scale = desired / bs.radius;
+	      mesh.scale.setScalar(scale);
+	      scene.add(mesh);
+	      animate();
+	    }, undefined, err => {
+	      console.warn('Failed to load STL', file, err);
+	      canvas.insertAdjacentHTML('afterend', '<div class="load-error" style="position:absolute;left:0;top:0;font-size:11px;padding:6px;color:#ffb347;background:#1e252c;">Load error</div>');
+	    });
+	    function resize(){
+	      const rect = canvas.getBoundingClientRect();
+	      const w = rect.width; const h = rect.height;
+	      renderer.setSize(w, h, false);
+	      camera.aspect = w / h; camera.updateProjectionMatrix();
+	    }
+	    const resizeObs = new ResizeObserver(resize); resizeObs.observe(canvas.parentElement);
+	    resize();
+	    function animate(){
+	      requestAnimationFrame(animate);
+	      controls.update();
+	      renderer.render(scene, camera);
+	    }
+	  }
+	  canvases.forEach(initViewer);
+	})();
+	</script>
+</body>
+</html>
