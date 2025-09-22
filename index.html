@@ -65,10 +65,19 @@
 		.viewer-frame { aspect-ratio: 1 / 0.85; background: linear-gradient(145deg,#1a222b,#0e1013); border:1px solid #262d37; border-radius: 10px; position:relative; overflow:hidden; }
 		.viewer-frame.placeholder { display:flex; align-items:center; justify-content:center; font-size:.75rem; color:var(--text-soft); background: repeating-linear-gradient(45deg,#1a222b 0 10px,#131a21 10px 20px); }
 		.step-note { opacity:.75; }
-		.stl-view { width:100%; height:100%; display:block; }
 		.model-actions { margin-top:.85rem; display:flex; flex-wrap:wrap; gap:.6rem; }
 		.btn.ghost { background: #1d2430; color: var(--text-soft); box-shadow:none; border:1px solid #2b3643; background-image:none; }
 		.btn.ghost:hover { background:#242e3a; color: var(--text); border-color:#35424f; transform:none; box-shadow: 0 2px 8px -4px rgba(0,0,0,.6); }
+		.viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+		/* Contribute section */
+		.contribute { margin-top: clamp(4rem, 10vh, 7rem); }
+		.contribute-inner { background: var(--bg-accent); padding: clamp(1.75rem, 3vw, 3rem) clamp(1.5rem, 3vw, 3rem); border-radius: var(--radius); box-shadow: 0 4px 20px -5px rgba(0,0,0,.55), 0 2px 8px -3px rgba(0,0,0,.35); }
+		.contribute h2 { margin:0 0 1rem; font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing:-.5px; }
+		.contribute .lead { font-size: clamp(1rem, 1.15vw, 1.1rem); color: var(--text-soft); max-width: 70ch; margin:0 0 1.5rem; }
+		.contribute-grid { display: grid; gap: clamp(1.25rem, 2vw, 2rem); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+		.contribute-card { background: var(--bg); padding: 1.5rem; border-radius: var(--radius); }
+		.contribute-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+		.contribute-card p { font-size: 0.9rem; color: var(--text-soft); margin: 0; }
 		@media (prefers-color-scheme: light) { .model-card { box-shadow: 0 4px 16px -6px rgba(0,0,0,.15), 0 2px 8px -4px rgba(0,0,0,.08); } .viewer-frame { background: linear-gradient(145deg,#f3f6f9,#dfe4ea); border-color:#d9e0e6; } .btn.ghost { background:#f5f7f9; border-color:#d9e0e6; } .btn.ghost:hover { background:#eef2f5; border-color:#cfd7de; } }
 		@media (prefers-color-scheme: light) {
 			:root { --bg:#f5f7fa; --bg-accent:#ffffff; --text:#1b232c; --text-soft:#5a646f; }
@@ -83,6 +92,12 @@
 		}
 		/* Reduced motion */
 		@media (prefers-reduced-motion: reduce) { * { animation:none!important; transition:none!important; } }
+		/* Details section */
+		.details { margin-top: clamp(4rem, 10vh, 7rem); }
+		.details-inner { background: var(--bg-accent); padding: clamp(1.75rem, 3vw, 3rem) clamp(1.5rem, 3vw, 3rem); border-radius: var(--radius); box-shadow: 0 4px 20px -5px rgba(0,0,0,.55), 0 2px 8px -3px rgba(0,0,0,.35); }
+		.details h2 { margin:0 0 1rem; font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing:-.5px; }
+		.details-grid { display: grid; gap: clamp(2rem, 4vw, 4rem); align-items: center; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+		.details-media img { width:100%; height:auto; display:block; border-radius: 10px; }
 	</style>
 </head>
 <body>
@@ -97,7 +112,7 @@
 				</figure>
 			</div>
 			<div class="hero-copy">
-				<h1>Ultra‑frugal open air quality sensor</h1>
+				<h1>DIY AQI Sensor</h1>
 				<p>Aqui is an air quality sensor that connects to a phone and shows the real-time PM2.5 and PM10 particulate readings. By leaning on your phone’s processor, battery, and connectivity, Aqui itself stays radically minimal, efficient, and frugal.</p>
 				<p>Aqui is an open-source DIY electronics project, released under the Creative Commons CC0 dedication. The parts can be ordered from AliExpress or other electronics suppliers, and the enclosure can be 3D printed.</p>
 				<div class="stack" aria-label="Project resources">
@@ -116,111 +131,118 @@
 				<div class="app-actions">
 					<a class="btn primary" href="assets/app-release.apk" download aria-label="Download the Aqui Android APK">Download APK</a>
 					<span class="note">Play Store listing coming soon.</span>
+                    
+				</div>
+			</div>
+		</section>
+		<section class="details" id="details" aria-labelledby="details-heading">
+			<div class="details-inner">
+				<h2 id="details-heading">Sensor Details</h2>
+				<div class="details-grid">
+					<div class="details-media">
+						<img src="sds011-large.png" alt="SDS011 Particulate Matter Sensor" loading="lazy" />
+					</div>
+					<div class="details-copy">
+						<p>The SDS011 is a laser-based sensor that measures PM2.5 and PM10 particulate matter concentrations in the air. It uses a small fan to draw air in and a laser to detect particles. The sensor provides reliable, real-time data.</p>
+						<p>Data is transmitted from the sensor using the UART protocol, which allows it to be easily read by a microcontroller or other devices.</p>
+						<p>An <a href="https://aqicn.org/sensor/sds011/" target="_blank" rel="noopener">experiment by aqicn.org</a> shows the sensor is very accurate. It is suited for our use case i.e. intermittent air quality monitoring.</p>
+					</div>
 				</div>
 			</div>
 		</section>
 		<section class="models" id="models" aria-labelledby="models-heading">
 			<div class="models-inner">
-				<h2 id="models-heading">3D Models</h2>
+				<h2 id="models-heading">DIY Build Guide</h2>
 				<p class="lead">Preview the printable enclosure parts directly in your browser. Download the STL files for the top and base. A STEP file is provided if you want to remix or adapt the design (optional).</p>
+				<section class="build-parts" aria-label="Parts List">
+					<h3 style="margin-top:2rem;margin-bottom:.5rem;font-size:1.08rem;">Parts</h3>
+					<div style="overflow-x:auto;margin-bottom:1.5rem;">
+					<table style="width:100%;border-collapse:collapse;background:var(--bg-accent);border-radius:12px;box-shadow:0 2px 8px -2px rgba(0,0,0,.10);">
+						<thead>
+							<tr style="background:var(--bg);color:var(--accent);">
+								<th style="padding:.8em .6em;text-align:left;font-size:1em;">Part</th>
+								<th style="padding:.8em .6em;text-align:left;font-size:1em;">Description</th>
+								<th style="padding:.8em .6em;text-align:left;font-size:1em;">Image</th>
+							</tr>
+						</thead>
+						<tbody style="color:var(--text-soft);font-size:.98em;">
+							<tr>
+								<td><strong>SDS011 Sensor + USB Serial Cable</strong></td>
+								<td>Approx. <b>Rs. 1600</b> on AliExpress.<br>
+									<a href="https://www.aliexpress.com/item/32817084913.html" target="_blank" rel="noopener">AliExpress link</a> (subject to change; always search "SDS011 sensor" for latest price and availability).<br><span style="font-size:.92em;opacity:.7;">Price and link may vary over time.</span>
+								</td>
+								<td style="text-align:center;"><img src="assets/parts/Sensor.png" alt="SDS011 Sensor" style="max-width:90px;height:auto;border-radius:8px;box-shadow:0 2px 8px -2px rgba(0,0,0,.12);background:#222;" /></td>
+							</tr>
+							<tr>
+								<td><strong>USB Type C to USB 3.0 OTG Cable</strong></td>
+								<td>Required to connect the sensor to most modern Android phones.<br>Available on AliExpress, Amazon, or local electronics stores.</td>
+								<td style="text-align:center;"><img src="assets/parts/adapter.png" alt="USB Type C to USB 3.0 OTG Cable" style="max-width:90px;height:auto;border-radius:8px;box-shadow:0 2px 8px -2px rgba(0,0,0,.12);background:#222;" /></td>
+							</tr>
+							<tr>
+								<td><strong>3D Printed Case</strong></td>
+								<td>Print the enclosure using the provided STL or STEP files.<br>You can use any standard FDM 3D printer and PLA/ABS filament.</td>
+								<td style="text-align:center;"><img src="assets/parts/case.png" alt="3D Printed Case" style="max-width:90px;height:auto;border-radius:8px;box-shadow:0 2px 8px -2px rgba(0,0,0,.12);background:#222;" /></td>
+							</tr>
+						</tbody>
+					</table>
+					<p style="margin-top:1.2rem;font-size:.98em;color:var(--text-soft);">You will also need a few small screws, a screwdriver, and some tape or double-sided tape for assembly and securing the parts.</p>
+					</div>
+				</section>
 				<div class="model-grid" role="list">
 					<article class="model-card" role="listitem">
 						<header><h3 class="model-title">Top Shell</h3></header>
 						<div class="viewer-frame">
-							<canvas class="stl-view" data-stl="assets/orange top.stl" aria-label="3D preview of top shell"></canvas>
+							<iframe id="vs_iframe_top" title="Top shell 3D preview" loading="lazy" src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2Fayushpatnaikgit%2Faqui.github.io%2Fmain%2Fassets%2Forange%2520top.stl&color=green&bgcolor=transparent"></iframe>
 						</div>
 						<div class="model-actions">
-							<a class="btn ghost" href="assets/orange top.stl" download>Download STL</a>
+							<a class="btn ghost" href="assets/orange%20top.stl" download>Download STL</a>
 						</div>
 					</article>
 					<article class="model-card" role="listitem">
 						<header><h3 class="model-title">Base</h3></header>
 						<div class="viewer-frame">
-							<canvas class="stl-view" data-stl="assets/black base.stl" aria-label="3D preview of base shell"></canvas>
+							<iframe id="vs_iframe_base" title="Base shell 3D preview" loading="lazy" src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2Fayushpatnaikgit%2Faqui.github.io%2Fmain%2Fassets%2Fblack%2520base.stl&color=azure&bgcolor=transparent"></iframe>
 						</div>
 						<div class="model-actions">
-							<a class="btn ghost" href="assets/black base.stl" download>Download STL</a>
+							<a class="btn ghost" href="assets/black%20base.stl" download>Download STL</a>
 						</div>
 					</article>
 					<article class="model-card optional" role="listitem">
 						<header><h3 class="model-title">Full Assembly (STEP)</h3></header>
 						<div class="viewer-frame placeholder">
-							<div class="step-note">STEP file (no live preview)</div>
+							<div class="step-note"><strong>.STEP</strong> is a neutral CAD exchange format that preserves precise parametric geometry (not just a triangle mesh).<br>Use it to modify or remix the enclosure in a CAD program, then export an STL for printing.</div>
 						</div>
 						<div class="model-actions">
-							<a class="btn ghost" href="assets/casing v9.step" download>Download STEP (Optional)</a>
+							<a class="btn ghost" href="assets/casing%20v9.step" download>Download STEP (Optional)</a>
 						</div>
 					</article>
 				</div>
+			</div>
+		</section>
+		<section class="contribute" id="contribute" aria-labelledby="contribute-heading">
+			<div class="contribute-inner">
+				<h2 id="contribute-heading">Contribute</h2>
+				<p class="lead">Aqui is an open-source project and we welcome contributions. Here are a few ways you can help:</p>
+				<div class="contribute-grid">
+					<div class="contribute-card">
+						<h3>Android Development</h3>
+						<p>If you're an Android developer, you can help improve the companion app. There are always new features to add and bugs to fix.</p>
+					</div>
+					<div class="contribute-card">
+						<h3>Case Design</h3>
+						<p>If you have experience with 3D modeling and printing, you can help improve the case design to make it more robust, easier to print, or more aesthetically pleasing.</p>
+					</div>
+					<div class="contribute-card">
+						<h3>Assembly & Manufacturing</h3>
+						<p>If you're interested in manufacturing and assembly, you can help streamline the process of building Aqui devices, making it easier for others to build their own.</p>
+					</div>
+				</div>
+				<p>Any other help is also welcome. The ultimate objective of this project is to bring awareness about air quality. If you have ideas or skills that could help, please reach out to <a href="mailto:ayushpatnaik@gmail.com">ayushpatnaik@gmail.com</a>.</p>
 			</div>
 		</section>
 		<footer>
 			<div>Made with care • Open hardware • CC0 1.0 Universal</div>
 		</footer>
 	</div>
-	<script src="https://unpkg.com/three@0.158.0/build/three.min.js" integrity="sha384-7b8rKqAjY5nOCmJwff6QF7tlrsBx2GyYBaiJDRHb4RQRR8E0BsKA+6MCVomPwYkE" crossorigin="anonymous"></script>
-	<script src="https://unpkg.com/three@0.158.0/examples/js/controls/OrbitControls.js" integrity="sha384-8zI0EHyCyMx5JpuLJXqpTJj5VqXH5WSRyHE/MmeG9iVo9XMD3pY8OF3Vkf0mPrGS" crossorigin="anonymous"></script>
-	<script src="https://unpkg.com/three@0.158.0/examples/js/loaders/STLLoader.js" integrity="sha384-bOQao1SCjymbhejCDBmStPNMyl4hXJq8FAh1CyvVS7+jiB2YNgfBydcSNMGGHhjn" crossorigin="anonymous"></script>
-	<script>
-	(function(){
-	  const canvases = document.querySelectorAll('.stl-view');
-	  if(!canvases.length || !window.THREE) return;
-	  function initViewer(canvas){
-	    const file = canvas.dataset.stl;
-	    const scene = new THREE.Scene();
-	    scene.background = new THREE.Color(0x0f1115);
-	    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
-	    camera.position.set(0, 40, 90);
-	    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
-	    renderer.setPixelRatio(window.devicePixelRatio||1);
-	    const controls = new THREE.OrbitControls(camera, canvas);
-	    controls.enablePan = false;
-	    controls.target.set(0,0,0);
-	    controls.update();
-	    // Lights
-	    const hemi = new THREE.HemisphereLight(0xffffff, 0x202028, 1.1);
-	    scene.add(hemi);
-	    const dir = new THREE.DirectionalLight(0xffffff, 0.65);
-	    dir.position.set(40,60,25);
-	    scene.add(dir);
-	    const back = new THREE.DirectionalLight(0xffffff, 0.25);
-	    back.position.set(-40,-30,-50);
-	    scene.add(back);
-	    // Ground-ish subtle gradient plane (optional comment out if unwanted)
-	    const loader = new THREE.STLLoader();
-	    loader.load(file, geometry => {
-	      geometry.computeVertexNormals();
-	      const material = new THREE.MeshStandardMaterial({ color: 0xff8c32, metalness:0.1, roughness:0.55 });
-	      const mesh = new THREE.Mesh(geometry, material);
-	      geometry.center();
-	      // Auto scale to fit
-	      geometry.computeBoundingSphere();
-	      const bs = geometry.boundingSphere;
-	      const desired = 40; // target radius
-	      const scale = desired / bs.radius;
-	      mesh.scale.setScalar(scale);
-	      scene.add(mesh);
-	      animate();
-	    }, undefined, err => {
-	      console.warn('Failed to load STL', file, err);
-	      canvas.insertAdjacentHTML('afterend', '<div class="load-error" style="position:absolute;left:0;top:0;font-size:11px;padding:6px;color:#ffb347;background:#1e252c;">Load error</div>');
-	    });
-	    function resize(){
-	      const rect = canvas.getBoundingClientRect();
-	      const w = rect.width; const h = rect.height;
-	      renderer.setSize(w, h, false);
-	      camera.aspect = w / h; camera.updateProjectionMatrix();
-	    }
-	    const resizeObs = new ResizeObserver(resize); resizeObs.observe(canvas.parentElement);
-	    resize();
-	    function animate(){
-	      requestAnimationFrame(animate);
-	      controls.update();
-	      renderer.render(scene, camera);
-	    }
-	  }
-	  canvases.forEach(initViewer);
-	})();
-	</script>
 </body>
 </html>
