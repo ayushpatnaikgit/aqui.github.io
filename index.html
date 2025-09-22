@@ -128,13 +128,23 @@
 			</div>
 		</section>
 		<section class="app" id="app" aria-labelledby="app-heading">
-			<div class="app-inner">
-				<h2 id="app-heading">Companion App</h2>
-				<p class="lead">The Aqui Android companion app is <a href="https://github.com/ayushpatnaikgit/aqui" target="_blank" rel="noopener">open‑source on GitHub</a>. It connects to the sensor over USB serial (or future BLE) and streams the live particulate data (PM2.5 / PM10) to your phone.</p>
-				<div class="app-actions">
-					<a class="btn primary" href="assets/app-release.apk" download aria-label="Download the Aqui Android APK">Download APK</a>
-					<span class="note">Play Store listing coming soon.</span>
-                    
+			<div class="app-inner" style="display:grid;grid-template-columns:1fr 340px;gap:2.2rem;align-items:start;">
+				<div>
+					<h2 id="app-heading">Companion App</h2>
+					<p class="lead">The Aqui Android companion app is <a href="https://github.com/ayushpatnaikgit/aqui" target="_blank" rel="noopener">open‑source on GitHub</a>. It connects to the sensor over USB serial and streams the live particulate data (PM2.5 / PM10) to your phone.</p>
+					<div style="margin-bottom:1em;font-size:.97em;color:var(--text-soft);"><b>Special thanks</b> to <a href="https://saurabhn.com/" target="_blank" rel="noopener">Saurabh Nandedkar</a> for help building the app.</div>
+					<div class="app-actions">
+						<br>
+                        
+                        <a class="btn primary" href="assets/app-release.apk" download aria-label="Download the Aqui Android APK">Download APK</a>
+						<span class="note">Play Store listing coming soon.</span>
+					</div>
+				</div>
+				<div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-start;">
+					<video src="assets/app.mp4" controls playsinline muted autoplay loop style="width:100%;max-width:200px;height:320px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px -2px rgba(0,0,0,.12);background:#222;" poster="">
+						Your browser does not support the video tag.
+					</video>
+					<div style="font-size:.92em;color:var(--text-soft);margin-top:.4em;text-align:center;">App demo: live AQI readings</div>
 				</div>
 			</div>
 		</section>
