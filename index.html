@@ -11,7 +11,7 @@
 			--bg-accent: #161a21;
 			--text: #e6e8ea;
 			--text-soft: #b2b8bf;
-			--accent: #ff8c32;
+			--accent: #449eff;
 			--max-width: 1180px;
 			--radius: 14px;
 			--font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
@@ -36,7 +36,7 @@
 		.hero-media img { width:100%; height:auto; display:block; border-radius: 10px; }
 		.hero-copy h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); line-height:1.08; margin:0 0 1rem; font-weight:650; letter-spacing:-.5px; }
 		.hero-copy p { font-size: clamp(1rem, 1.25vw, 1.15rem); max-width: 62ch; margin:0 0 1.1rem; color: var(--text-soft); }
-		.tag { display:inline-block; background: linear-gradient(135deg,var(--accent), #ffb347); color:#1a1209; font-weight:600; padding:.4rem .8rem; font-size:.75rem; letter-spacing:.5px; text-transform:uppercase; border-radius: 999px; box-shadow:0 2px 6px -1px rgba(0,0,0,.4); }
+		.tag { display:inline-block; background: linear-gradient(135deg,var(--accent), #b3e0ff); color:#ffffff; font-weight:600; padding:.4rem .8rem; font-size:.75rem; letter-spacing:.5px; text-transform:uppercase; border-radius: 999px; box-shadow:0 2px 6px -1px rgba(0,0,0,.4); }
 		.stack { display:flex; flex-wrap:wrap; gap:.75rem; margin:1.25rem 0 0; }
 		.stack a { font-size:.8rem; background:var(--bg-accent); color:var(--text-soft); padding:.55rem .85rem; border-radius: 999px; border:1px solid #262d37; transition:.25s background, .25s color, .25s border-color; }
 		.stack a:hover { background:#222a34; color:var(--text); border-color:#333d49; }
@@ -50,9 +50,9 @@
 		.app .lead { font-size: clamp(1rem, 1.15vw, 1.1rem); color: var(--text-soft); max-width: 70ch; margin:0 0 1.5rem; }
 		.app-grid { display: grid; gap: clamp(2rem, 4vw, 4rem); align-items: start; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
 		.app-actions { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; }
-		.btn { --btn-bg: var(--accent); --btn-text:#1a1209; position:relative; display:inline-flex; align-items:center; gap:.5rem; font-weight:600; padding:.85rem 1.25rem; font-size:.9rem; letter-spacing:.4px; border-radius: 10px; border:none; cursor:pointer; background: linear-gradient(135deg,var(--btn-bg), #ffb347); color:var(--btn-text); box-shadow: 0 2px 6px -2px rgba(0,0,0,.4), 0 4px 16px -6px rgba(0,0,0,.55); transition:.25s transform, .25s box-shadow; }
-		.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px -6px rgba(0,0,0,.6), 0 3px 10px -4px rgba(0,0,0,.5); text-decoration:none; }
-		.btn:active { transform: translateY(0); box-shadow: 0 2px 8px -4px rgba(0,0,0,.55); }
+		.btn { --btn-bg: #4A90E2; --btn-text:#ffffff; position:relative; display:inline-flex; align-items:center; gap:.5rem; font-weight:600; padding:.95rem 1.5rem; font-size:.95rem; letter-spacing:.3px; border-radius: 12px; border:none; cursor:pointer; background: linear-gradient(135deg, #4A90E2, #74B9FF); color:var(--btn-text); box-shadow: 0 4px 15px -3px rgba(74,144,226,.4), 0 2px 8px -2px rgba(0,0,0,.15); transition:.3s all ease; }
+		.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px -5px rgba(74,144,226,.5), 0 4px 12px -3px rgba(0,0,0,.2); text-decoration:none; }
+		.btn:active { transform: translateY(0); box-shadow: 0 2px 8px -2px rgba(74,144,226,.3); }
 		.note { font-size:.8rem; color: var(--text-soft); }
 		@media (prefers-color-scheme: light) { .app-inner { box-shadow: 0 6px 24px -8px rgba(0,0,0,.12), 0 3px 12px -5px rgba(0,0,0,.08); } }
 		/* Models section */
